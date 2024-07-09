@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import leagues from './leagues/leagueSlice';
+import euro from './euro/euroSlice';
 
 const rootReducer = {
-  leagues: leagues,
+  euro: euro,
 };
 
 const store = configureStore({
