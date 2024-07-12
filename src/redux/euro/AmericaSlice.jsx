@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const fetchMatches = createAsyncThunk(
-  'euro/fetchMatches',
+export const fetchMatchesA = createAsyncThunk(
+  'america/fetchMatches',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://euro-20242.p.rapidapi.com/matches', {
+      const response = await fetch('https://copa-america-2024.p.rapidapi.com/matches', {
         method: 'GET',
         headers: {
-          'x-rapidapi-host': 'euro-20242.p.rapidapi.com',
+          'x-rapidapi-host': 'copa-america-2024.p.rapidapi.com',
           'x-rapidapi-key': 'f8c33a76f6msh61f491b42c62ff8p1262e2jsn1f5a4e9a016a'
         }
       });
@@ -17,7 +17,7 @@ export const fetchMatches = createAsyncThunk(
       }
 
       const data = await response.json();
-      console.log('Partidos:');
+      console.log('Partidos Copa America:');
       data.forEach(match => {
         console.log(`Team A: ${match.teamA.team.name}, Team B: ${match.teamB.team.name}`);
       });
@@ -28,29 +28,29 @@ export const fetchMatches = createAsyncThunk(
   }
 );
 
-const euroSlice = createSlice({
-  name: 'euro',
+const AmericaSlice = createSlice({
+  name: 'america',
   initialState: {
-    matches: [],
+    matchesa: [],
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMatches.pending, (state) => {
+      .addCase(fetchMatchesA.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchMatches.fulfilled, (state, action) => {
+      .addCase(fetchMatchesA.fulfilled, (state, action) => {
         state.loading = false;
-        state.matches = action.payload;
+        state.matchesa = action.payload;
       })
-      .addCase(fetchMatches.rejected, (state, action) => {
+      .addCase(fetchMatchesA.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export default euroSlice.reducer;
+export default AmericaSlice.reducer;
