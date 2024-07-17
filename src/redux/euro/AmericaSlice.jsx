@@ -11,18 +11,26 @@ export const fetchMatchesA = createAsyncThunk(
           'x-rapidapi-key': 'f8c33a76f6msh61f491b42c62ff8p1262e2jsn1f5a4e9a016a'
         }
       });
-
+    
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+    
       const data = await response.json();
-      console.log('Partidos Copa America:');
-      data.forEach(match => {
-        console.log(`Team A: ${match.teamA.team.name}, Team B: ${match.teamB.team.name}`);
-      });
+      console.log('Partidos Copa America:', data);
+    
+      if (Array.isArray(data)) {
+        data.forEach(match => {
+          console.log(`Team A: ${match.teamA?.team?.name}, Team B: ${match.teamB?.team?.name}`);
+        });
+      } else {
+        console.error('Unexpected data format:', data);
+      }
+    
+      console.log('por que');
       return data;
     } catch (error) {
+      console.error('Error fetching matches:', error);
       return rejectWithValue(error.message);
     }
   }

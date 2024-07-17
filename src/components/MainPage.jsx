@@ -11,7 +11,7 @@ function MainPage() {
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
- console.log(fetchMatchesA.date);
+
   useEffect(() => {
     dispatch(fetchMatches());
     dispatch(fetchMatchesA());
@@ -26,7 +26,7 @@ function MainPage() {
   }
 
   const startDate = new Date('2024-07-09T00:00:00.000Z');
-  const endDate = new Date('2024-07-14T23:59:59.999Z');
+  const endDate = new Date('2024-07-15T23:59:59.999Z');
 
   const filteredMatches = matches.filter((match) => {
     const matchDate = new Date(match.date);
@@ -59,7 +59,7 @@ function MainPage() {
         <ul>
           {filteredMatchesAmerica.map((match) => (
             <li key={match._id}>
-              {match.teamA.team.name} {match.teamA.score} - {match.teamB.score} {capitalizeFirstLetter(match.teamB.team.name)}
+              {match.teamA?.team?.name ? capitalizeFirstLetter(match.teamA.team.name) : 'Unknown'} {match.teamA?.score ?? 'N/A'} - {match.teamB?.score ?? 'N/A'} {match.teamB?.team?.name ? capitalizeFirstLetter(match.teamB.team.name) : 'Unknown'}
             </li>
           ))}
         </ul>
