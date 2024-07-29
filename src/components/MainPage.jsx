@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import '../stylesheets/MainPages.css';
+import paul from '../img/paul.png';
+import ball from '../img/ball.png';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,10 +24,8 @@ function MainPage() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // El usuario ha iniciado sesión
         dispatch({ type: 'USER_LOGGED_IN', payload: user });
       } else {
-        // El usuario ha cerrado sesión
         dispatch({ type: 'USER_LOGGED_OUT' });
       }
     });
@@ -34,12 +35,15 @@ function MainPage() {
 
 
   return (
-    <div>
-      <header>
-        <h1>Paul's Sports</h1>
-        <div></div>
+    <div className='home-page'>
+      <header className='paul-header'>
+        <div className='web-logo'>
+          <img src={paul} alt="" className='logo' />
+          <h1>Paul's Sports</h1>
+        </div>
+        <button className='hmenu'><img src={ball} alt="" className='ball' /></button>
       </header>
-      <section>
+      <section className='paul-body'>
 
       </section>
     </div>
