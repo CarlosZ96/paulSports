@@ -17,12 +17,13 @@ export const FecthEvents = createAsyncThunk(
       }
 
       const data = await response.json();
-      const filteredMatches = data.filter(match => match.season.id === 17);
-      
+      console.log('Sin filtro:',data.events[0]);
+      const filteredMatches = data.events.filter(match => match.season.name === "UEFA Europa League 24/25");
+
       console.log('Filtered Matches:');
       console.log(filteredMatches);
-      
-      return data;
+
+      return filteredMatches;
     } catch (error) {
       return rejectWithValue(error.message);
     }

@@ -32,7 +32,6 @@ function MainPage() {
       }
     });
 
-    // Función para obtener fechas en formato DD/MM/YYYY
     const getFormattedDate = (date) => {
       const day = date.getDate().toString().padStart(2, '0');
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -40,7 +39,7 @@ function MainPage() {
       return `${day}/${month}/${year}`;
     };
 
-    // Obtener fechas para hoy y los próximos tres días
+
     const today = new Date();
     const dates = [0, 1, 2, 3].map(offset => {
       const date = new Date();
