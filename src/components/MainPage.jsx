@@ -47,9 +47,10 @@ function MainPage() {
       return getFormattedDate(date);
     });
 
-    // Despachar la acción para cada fecha
+  
     dates.forEach(date => {
       dispatch(FecthEvents(date));
+      console.log('fecha: ',date);
     });
 
     return () => unsubscribe();

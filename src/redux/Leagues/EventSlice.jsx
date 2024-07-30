@@ -8,7 +8,7 @@ export const FecthEvents = createAsyncThunk(
         method: 'GET',
         headers: {
           'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-          'x-rapidapi-key': 'f8c33a76f6msh61f491b42c62ff8p1262e2jsn1f5a4e9a016a'
+          'x-rapidapi-key': 'b57976ae53mshaea78024d356c56p15fa93jsn121fe3bd4f98'
         }
       });
 
@@ -18,7 +18,7 @@ export const FecthEvents = createAsyncThunk(
 
       const data = await response.json();
       console.log('Sin filtro:',data.events[0]);
-      const filteredMatches = data.events.filter(match => match.season.name === "UEFA Europa League 24/25");
+      const filteredMatches = data.events.filter(match => match.tournament.id === 1339);
 
       console.log('Filtered Matches:');
       console.log(filteredMatches);
