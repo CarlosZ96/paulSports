@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import '../stylesheets/MainPages.css';
 import paul from '../img/paul.png';
 import ball from '../img/ball.png';
+import { FecthEvents } from '../redux/Leagues/EventSlice';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -20,6 +21,7 @@ const auth = getAuth(app);
 
 function MainPage() {
   const dispatch = useDispatch();
+  const matches = useSelector((state) => state.maches.matches);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,9 +32,33 @@ function MainPage() {
       }
     });
 
+    // Función para obtener fechas en formato DD/MM/YYYY
+    const getFormattedDate = (date) => {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
+
+    // Obtener fechas para hoy y los próximos tres días
+    const today = new Date();
+    const dates = [0, 1, 2, 3].map(offset => {
+      const date = new Date();
+      date.setDate(today.getDate() + offset);
+      return getFormattedDate(date);
+    });
+
+    // Despachar la acción para cada fecha
+    dates.forEach(date => {
+      dispatch(FecthEvents(date));
+    });
+
     return () => unsubscribe();
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log('Matches:', matches);
+  }, [matches]);
 
   return (
     <div className='home-page'>
@@ -44,7 +70,9 @@ function MainPage() {
         <button className='hmenu'><img src={ball} alt="" className='ball' /></button>
       </header>
       <section className='paul-body'>
-
+        <div className='matches-container'>
+          <h2 className='matches-tittle'>Next Matches:</h2>
+        </div>
       </section>
     </div>
   );

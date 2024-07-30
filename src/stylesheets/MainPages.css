@@ -25,6 +25,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   width: 80%;
 }
 
@@ -45,7 +46,36 @@ body {
 }
 
 .paul-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: #0069ff;
   width: 100%;
-  height: 90%;
+  height: 100%;
+}
+
+.matches-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffff;
+  width: 94%;
+  height: 92%;
+  border-radius: 3px;
+}
+
+.matches-tittle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 7vw;
+  background-color: #fff500;
+  color: #0069ff;
+  width: 80%;
+  height: 10%;
+  margin: 2% 0 0 0;
 }
