@@ -21,7 +21,7 @@ const auth = getAuth(app);
 
 function MainPage() {
   const dispatch = useDispatch();
-  const matches = useSelector((state) => state.maches.matches);
+  const { matches, loading, error } = useSelector((state) => state.maches);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,12 +33,11 @@ function MainPage() {
     });
 
     const getFormattedDate = (date) => {
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
       return `${day}/${month}/${year}`;
-    };
-
+    };    
 
     const today = new Date();
     const dates = [0, 1, 2, 3].map(offset => {
@@ -47,10 +46,9 @@ function MainPage() {
       return getFormattedDate(date);
     });
 
-  
     dates.forEach(date => {
       dispatch(FecthEvents(date));
-      console.log('fecha: ',date);
+      console.log('Fecha:', date);
     });
 
     return () => unsubscribe();
@@ -72,6 +70,17 @@ function MainPage() {
       <section className='paul-body'>
         <div className='matches-container'>
           <h2 className='matches-tittle'>Next Matches:</h2>
+          {loading && <p>Loading...</p>}
+          {error && <p>Error: {error}</p>}
+          {!loading && !error && matches.length > 0 && matches.map((match, index) => (
+            <div key={match.id} className='match'>
+              <p><strong>Tournament:</strong> {match.tournament?.name || 'Unknown'}</p>
+              <p><strong>Position:</strong> {index + 1}</p>
+              <p><strong>{match.homeTeam?.name}</strong> vs <strong>{match.awayTeam?.name}</strong></p>
+              <p><strong>Date:</strong> {match.date}</p>
+            </div>
+          ))}
+          {!loading && !error && matches.length === 0 && <p>No matches found for the given dates</p>}
         </div>
       </section>
     </div>

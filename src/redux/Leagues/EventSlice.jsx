@@ -8,22 +8,17 @@ export const FecthEvents = createAsyncThunk(
         method: 'GET',
         headers: {
           'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-          'x-rapidapi-key': 'b57976ae53mshaea78024d356c56p15fa93jsn121fe3bd4f98'
+          'x-rapidapi-key': '5b8ad83598mshfe0b05159a9aaa8p1cbc63jsn991e0f990061'
         }
       });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
       const data = await response.json();
-      console.log('Sin filtro:',data.events[0]);
-      const filteredMatches = data.events.filter(match => match.tournament.id === 1339);
-
-      console.log('Filtered Matches:');
-      console.log(filteredMatches);
-
-      return filteredMatches;
+      console.log('Datos completos:', data);
+      console.log('Eventos:', data.events);
+      return data.events || [];
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -31,7 +26,7 @@ export const FecthEvents = createAsyncThunk(
 );
 
 const EventSlice = createSlice({
-  name: 'euro',
+  name: 'matches',
   initialState: {
     matches: [],
     loading: false,
@@ -46,7 +41,7 @@ const EventSlice = createSlice({
       })
       .addCase(FecthEvents.fulfilled, (state, action) => {
         state.loading = false;
-        state.matches = action.payload;
+        state.matches = [...state.matches, ...action.payload];
       })
       .addCase(FecthEvents.rejected, (state, action) => {
         state.loading = false;
