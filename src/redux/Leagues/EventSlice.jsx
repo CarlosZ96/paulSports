@@ -8,7 +8,7 @@ export const FecthEvents = createAsyncThunk(
         method: 'GET',
         headers: {
           'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-          'x-rapidapi-key': '5b8ad83598mshfe0b05159a9aaa8p1cbc63jsn991e0f990061'
+          'x-rapidapi-key': 'f8c33a76f6msh61f491b42c62ff8p1262e2jsn1f5a4e9a016a'
         }
       });
 
@@ -18,7 +18,10 @@ export const FecthEvents = createAsyncThunk(
       const data = await response.json();
       console.log('Datos completos:', data);
       console.log('Eventos:', data.events);
-      return data.events || [];
+
+      // Filtrar los eventos para incluir solo aquellos con season.name igual a "Olympic Games 2024"
+      const filteredEvents = (data.events || []).filter(event => event.season?.name === "Olympic Games 2024");
+      return filteredEvents;
     } catch (error) {
       return rejectWithValue(error.message);
     }
