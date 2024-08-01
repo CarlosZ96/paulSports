@@ -8,7 +8,7 @@ export const FecthEvents = createAsyncThunk(
         method: 'GET',
         headers: {
           'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-          'x-rapidapi-key': 'f8c33a76f6msh61f491b42c62ff8p1262e2jsn1f5a4e9a016a'
+          'x-rapidapi-key': '5b8ad83598mshfe0b05159a9aaa8p1cbc63jsn991e0f990061'
         }
       });
 
@@ -19,19 +19,53 @@ export const FecthEvents = createAsyncThunk(
       console.log('Datos completos:', data);
       console.log('Eventos:', data.events);
 
-      // Filtrar los eventos para incluir solo aquellos con los nombres de temporada específicos
       const filteredEvents = (data.events || []).filter(event =>
         ["Olympic Games 2024", "Primera A, Clausura 2024", "Olympic Games Women 2024"].includes(event.season?.name)
       );
 
-      // Convertir la fecha en milisegundos y añadir 3 ceros a la derecha, y luego ordenar los eventos por fecha
-      const formattedEvents = filteredEvents.map(event => {
-        const timestamp = event.startTimestamp * 1000; // Convertir de segundos a milisegundos
+      const formattedEvents = await Promise.all(filteredEvents.map(async event => {
+        const timestamp = event.startTimestamp * 1000;
         const date = new Date(timestamp);
         event.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-        event.timestamp = timestamp; // Guardar el timestamp para ordenar
+        event.timestamp = timestamp;
+
+        const homeTeamResponse = await fetch(`https://allsportsapi2.p.rapidapi.com/api/team/${event.homeTeam.id}/image`, {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
+            'x-rapidapi-key': 'b57976ae53mshaea78024d356c56p15fa93jsn121fe3bd4f98'
+          }
+        });
+        const homeTeamBlob = await homeTeamResponse.blob();
+        const homeTeamImageUrl = URL.createObjectURL(homeTeamBlob);
+        event.homeTeam.image = homeTeamImageUrl;
+
+        const awayTeamResponse = await fetch(`https://allsportsapi2.p.rapidapi.com/api/team/${event.awayTeam.id}/image`, {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
+            'x-rapidapi-key': 'b57976ae53mshaea78024d356c56p15fa93jsn121fe3bd4f98'
+          }
+        });
+        const awayTeamBlob = await awayTeamResponse.blob();
+        const awayTeamImageUrl = URL.createObjectURL(awayTeamBlob);
+        event.awayTeam.image = awayTeamImageUrl;
+
+        const tournament = await fetch(`https://allsportsapi2.p.rapidapi.com/api/tournament/${event.tournament.uniqueTournament.id}/image`, {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
+            'x-rapidapi-key': '5b8ad83598mshfe0b05159a9aaa8p1cbc63jsn991e0f990061'
+          }
+        });
+        const tournamentBlob = await tournament.blob();
+        const tournamentUrl = URL.createObjectURL(tournamentBlob);
+        event.tournament.image = tournamentUrl;
+
         return event;
-      }).sort((a, b) => a.timestamp - b.timestamp); // Ordenar por fecha
+      }));
+
+      formattedEvents.sort((a, b) => a.timestamp - b.timestamp);
 
       return formattedEvents;
     } catch (error) {
@@ -56,7 +90,11 @@ const EventSlice = createSlice({
       })
       .addCase(FecthEvents.fulfilled, (state, action) => {
         state.loading = false;
-        state.matches = [...state.matches, ...action.payload];
+        // Evita añadir duplicados
+        const newMatches = action.payload.filter(
+          newMatch => !state.matches.some(match => match.id === newMatch.id)
+        );
+        state.matches = [...state.matches, ...newMatches];
       })
       .addCase(FecthEvents.rejected, (state, action) => {
         state.loading = false;

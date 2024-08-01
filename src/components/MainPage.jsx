@@ -37,7 +37,7 @@ function MainPage() {
       const month = date.getMonth() + 1;
       const day = date.getDate();
       return `${day}/${month}/${year}`;
-    };    
+    };
 
     const today = new Date();
     const dates = [0, 1, 2, 3].map(offset => {
@@ -75,9 +75,16 @@ function MainPage() {
           {!loading && !error && matches.length > 0 && matches.map((match, index) => (
             <div key={match.id} className='match'>
               <p><strong>Tournament:</strong> {match.tournament?.name || 'Unknown'}</p>
+              <div className='Tournament-logos'>
+              {match.tournament?.image && <img src={match.tournament.image} alt={`${match.tournament.name} logo`} className='Tournament-logo-img' />}
+              </div>
               <p><strong>Position:</strong> {index + 1}</p>
               <p><strong>{match.homeTeam?.name}</strong> vs <strong>{match.awayTeam?.name}</strong></p>
               <p><strong>Date:</strong> {match.date}</p>
+              <div className='team-logos'>
+                {match.homeTeam?.image && <img src={match.homeTeam.image} alt={`${match.homeTeam.name} logo`} className='team-logo' />}
+                {match.awayTeam?.image && <img src={match.awayTeam.image} alt={`${match.awayTeam.name} logo`} className='team-logo' />}
+              </div>
             </div>
           ))}
           {!loading && !error && matches.length === 0 && <p>No matches found for the given dates</p>}
