@@ -19,9 +19,21 @@ export const FecthEvents = createAsyncThunk(
       console.log('Datos completos:', data);
       console.log('Eventos:', data.events);
 
-      // Filtrar los eventos para incluir solo aquellos con season.name igual a "Olympic Games 2024"
-      const filteredEvents = (data.events || []).filter(event => event.season?.name === "Olympic Games 2024");
-      return filteredEvents;
+      // Filtrar los eventos para incluir solo aquellos con los nombres de temporada específicos
+      const filteredEvents = (data.events || []).filter(event =>
+        ["Olympic Games 2024", "Primera A, Clausura 2024", "Olympic Games Women 2024"].includes(event.season?.name)
+      );
+
+      // Convertir la fecha en milisegundos y añadir 3 ceros a la derecha, y luego ordenar los eventos por fecha
+      const formattedEvents = filteredEvents.map(event => {
+        const timestamp = event.startTimestamp * 1000; // Convertir de segundos a milisegundos
+        const date = new Date(timestamp);
+        event.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        event.timestamp = timestamp; // Guardar el timestamp para ordenar
+        return event;
+      }).sort((a, b) => a.timestamp - b.timestamp); // Ordenar por fecha
+
+      return formattedEvents;
     } catch (error) {
       return rejectWithValue(error.message);
     }
