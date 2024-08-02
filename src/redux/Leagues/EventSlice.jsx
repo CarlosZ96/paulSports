@@ -8,7 +8,7 @@ export const FecthEvents = createAsyncThunk(
         method: 'GET',
         headers: {
           'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-          'x-rapidapi-key': '5b8ad83598mshfe0b05159a9aaa8p1cbc63jsn991e0f990061'
+          'x-rapidapi-key': 'd873ebf3f2msh6f90fe677fd2040p14b20ajsna8938332a241'
         }
       });
 
@@ -33,7 +33,7 @@ export const FecthEvents = createAsyncThunk(
           method: 'GET',
           headers: {
             'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-            'x-rapidapi-key': 'b57976ae53mshaea78024d356c56p15fa93jsn121fe3bd4f98'
+            'x-rapidapi-key': '14f7335909msh055d4ff0647794ap1922bajsn86895ec808e0'
           }
         });
         const homeTeamBlob = await homeTeamResponse.blob();
@@ -44,7 +44,7 @@ export const FecthEvents = createAsyncThunk(
           method: 'GET',
           headers: {
             'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-            'x-rapidapi-key': 'b57976ae53mshaea78024d356c56p15fa93jsn121fe3bd4f98'
+            'x-rapidapi-key': '14f7335909msh055d4ff0647794ap1922bajsn86895ec808e0'
           }
         });
         const awayTeamBlob = await awayTeamResponse.blob();
@@ -55,7 +55,7 @@ export const FecthEvents = createAsyncThunk(
           method: 'GET',
           headers: {
             'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-            'x-rapidapi-key': '5b8ad83598mshfe0b05159a9aaa8p1cbc63jsn991e0f990061'
+            'x-rapidapi-key': '14f7335909msh055d4ff0647794ap1922bajsn86895ec808e0'
           }
         });
         const tournamentBlob = await tournament.blob();

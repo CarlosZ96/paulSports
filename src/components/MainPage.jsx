@@ -74,16 +74,24 @@ function MainPage() {
           {error && <p>Error: {error}</p>}
           {!loading && !error && matches.length > 0 && matches.map((match, index) => (
             <div key={match.id} className='match'>
-              <p><strong>Tournament:</strong> {match.tournament?.name || 'Unknown'}</p>
               <div className='Tournament-logos'>
-              {match.tournament?.image && <img src={match.tournament.image} alt={`${match.tournament.name} logo`} className='Tournament-logo-img' />}
+                {match.tournament?.image && <img src={match.tournament.image} alt={`${match.tournament.name} logo`} className='Tournament-logo-img' />}
               </div>
-              <p><strong>Position:</strong> {index + 1}</p>
-              <p><strong>{match.homeTeam?.name}</strong> vs <strong>{match.awayTeam?.name}</strong></p>
-              <p><strong>Date:</strong> {match.date}</p>
-              <div className='team-logos'>
-                {match.homeTeam?.image && <img src={match.homeTeam.image} alt={`${match.homeTeam.name} logo`} className='team-logo' />}
-                {match.awayTeam?.image && <img src={match.awayTeam.image} alt={`${match.awayTeam.name} logo`} className='team-logo' />}
+              <div className='match-data'>
+                <div className='title-name'>
+                  <p>{match.tournament?.name || 'Unknown'}</p> <p>{match.date}</p>
+                </div>
+                <div className='teams-data'>
+                  <strong className='team-name'>{match.homeTeam?.name}</strong> 
+                  {match.homeTeam?.image && <img src={match.homeTeam.image} alt={`${match.homeTeam.name} logo`} className='team-logo' />}
+                  <div className='Home-Score'>{match.homeScore?.current ?? 0}</div>
+                  -
+                  <div className='Home-Score'>{match.awayScore?.current ?? 0}</div>
+                  {match.awayTeam?.image && <img src={match.awayTeam.image} alt={`${match.awayTeam.name} logo`} className='team-logo' />}
+                  <strong className='team-name'>{match.awayTeam?.name}</strong>
+                  <div className='team-logos'>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
