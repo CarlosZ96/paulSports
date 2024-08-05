@@ -8,7 +8,7 @@ export const FecthEvents = createAsyncThunk(
         method: 'GET',
         headers: {
           'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-          'x-rapidapi-key': 'd873ebf3f2msh6f90fe677fd2040p14b20ajsna8938332a241'
+          'x-rapidapi-key': 'f8c33a76f6msh61f491b42c62ff8p1262e2jsn1f5a4e9a016a'
         }
       });
 
@@ -55,7 +55,7 @@ export const FecthEvents = createAsyncThunk(
           method: 'GET',
           headers: {
             'x-rapidapi-host': 'allsportsapi2.p.rapidapi.com',
-            'x-rapidapi-key': '14f7335909msh055d4ff0647794ap1922bajsn86895ec808e0'
+            'x-rapidapi-key': 'f8c33a76f6msh61f491b42c62ff8p1262e2jsn1f5a4e9a016a'
           }
         });
         const tournamentBlob = await tournament.blob();
@@ -64,10 +64,9 @@ export const FecthEvents = createAsyncThunk(
 
         return event;
       }));
+      const sortedEvents = formattedEvents.sort((a, b) => a.timestamp - b.timestamp);
 
-      formattedEvents.sort((a, b) => a.timestamp - b.timestamp);
-
-      return formattedEvents;
+      return sortedEvents;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -90,11 +89,10 @@ const EventSlice = createSlice({
       })
       .addCase(FecthEvents.fulfilled, (state, action) => {
         state.loading = false;
-        // Evita añadir duplicados
         const newMatches = action.payload.filter(
           newMatch => !state.matches.some(match => match.id === newMatch.id)
         );
-        state.matches = [...state.matches, ...newMatches];
+        state.matches = [...state.matches, ...newMatches].sort((a, b) => a.timestamp - b.timestamp);
       })
       .addCase(FecthEvents.rejected, (state, action) => {
         state.loading = false;

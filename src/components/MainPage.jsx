@@ -58,6 +58,13 @@ function MainPage() {
     console.log('Matches:', matches);
   }, [matches]);
 
+  const formatTime = (timestamp, offset = 0) => {
+    const date = new Date(timestamp + offset * 60 * 60 * 1000);
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   return (
     <div className='home-page'>
       <header className='paul-header'>
@@ -74,15 +81,16 @@ function MainPage() {
           {error && <p>Error: {error}</p>}
           {!loading && !error && matches.length > 0 && matches.map((match, index) => (
             <div key={match.id} className='match'>
-              <div className='Tournament-logos'>
-                {match.tournament?.image && <img src={match.tournament.image} alt={`${match.tournament.name} logo`} className='Tournament-logo-img' />}
+              <div className='title-name'>
+                <p>{match.tournament.uniqueTournament?.name || 'Unknown'}</p> <p>{match.date}</p>
               </div>
               <div className='match-data'>
-                <div className='title-name'>
-                  <p>{match.tournament?.name || 'Unknown'}</p> <p>{match.date}</p>
+                <div className='Tournament-logos'>
+                  {match.tournament?.image && <img src={match.tournament.image} alt={`${match.tournament.name} logo`} className='Tournament-logo-img' />}
+                  <p>{match.roundInfo?.name || 'League'}</p>
                 </div>
                 <div className='teams-data'>
-                  <strong className='team-name'>{match.homeTeam?.name}</strong> 
+                  <strong className='team-name'>{match.homeTeam?.name}</strong>
                   {match.homeTeam?.image && <img src={match.homeTeam.image} alt={`${match.homeTeam.name} logo`} className='team-logo' />}
                   <div className='Home-Score'>{match.homeScore?.current ?? 0}</div>
                   -
@@ -92,6 +100,10 @@ function MainPage() {
                   <div className='team-logos'>
                   </div>
                 </div>
+              </div>
+              <div className='hours-container'>
+                <p className='hour'>UTC: {formatTime(match.timestamp)}</p>
+                <p className='hour'>UTC-5: {formatTime(match.timestamp, -5)}</p>
               </div>
             </div>
           ))}
