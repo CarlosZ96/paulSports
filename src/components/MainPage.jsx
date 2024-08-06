@@ -90,13 +90,19 @@ function MainPage() {
                   <p>{match.roundInfo?.name || 'League'}</p>
                 </div>
                 <div className='teams-data'>
-                  <strong className='team-name'>{match.homeTeam?.name}</strong>
-                  {match.homeTeam?.image && <img src={match.homeTeam.image} alt={`${match.homeTeam.name} logo`} className='team-logo' />}
-                  <div className='Home-Score'>{match.homeScore?.current ?? 0}</div>
-                  -
-                  <div className='Home-Score'>{match.awayScore?.current ?? 0}</div>
-                  {match.awayTeam?.image && <img src={match.awayTeam.image} alt={`${match.awayTeam.name} logo`} className='team-logo' />}
-                  <strong className='team-name'>{match.awayTeam?.name}</strong>
+                  <div className='team'>
+                    <strong className='team-name'>{match.homeTeam?.name}</strong>
+                    {match.homeTeam?.image && <img src={match.homeTeam.image} alt={`${match.homeTeam.name} logo`} className='team-logo' />}
+                  </div>
+                  <div className='score'>
+                    <div className='Home-Score'>{match.homeScore?.current ?? 0}</div>
+                    -
+                    <div className='Home-Score'>{match.awayScore?.current ?? 0}</div>
+                  </div>
+                  <div className='team'>
+                    {match.awayTeam?.image && <img src={match.awayTeam.image} alt={`${match.awayTeam.name} logo`} className='team-logo' />}
+                    <strong className='team-name'>{match.awayTeam?.name}</strong>
+                  </div>
                   <div className='team-logos'>
                   </div>
                 </div>
