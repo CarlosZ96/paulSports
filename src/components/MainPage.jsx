@@ -115,6 +115,7 @@ function MainPage() {
           ))}
           {!loading && !error && matches.length === 0 && <p>No matches found for the given dates</p>}
         </div>
+        
       </section>
     </div>
   );
