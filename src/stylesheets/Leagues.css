@@ -1,0 +1,64 @@
+.Leagues-popup-window{
+  width: 96vw;
+  height: 95vh;
+  background-color: #000E22;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Login-Container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  width: 90%;
+  height: 10%;
+  border-radius: 3px;
+  margin: 2% 0 2% 0;
+}
+
+.Leagues-container{
+  width: 90%;
+  height: 90%;
+}
+
+.login-img {
+  width: 30px;
+  height: 30px;
+  transform: rotateY(180deg);
+  margin-right: 2%;
+}
+
+.login-txt{
+  color: #053983;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.teams-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 3px;
+  width: 100%;
+  height: 30%;
+  margin-bottom: 3%;
+}
+
+.tournament-img{
+  width: 47px;
+  height: 47px;
+}
+
+.tournament-background-img {
+  width: 80%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #053983; /* Color de respaldo */
+}
