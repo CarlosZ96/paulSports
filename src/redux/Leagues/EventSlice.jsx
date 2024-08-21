@@ -20,7 +20,7 @@ export const FecthEvents = createAsyncThunk(
       console.log('Eventos:', data.events);
 
       const filteredEvents = (data.events || []).filter(event =>
-        ["Olympic Games 2024", "Primera A, Clausura 2024", "Olympic Games Women 2024"].includes(event.season?.name)
+        ["Copa Libertadores 2024", "Primera A, Clausura 2024", "Premier League"].includes(event.season?.name)
       );
 
       const formattedEvents = await Promise.all(filteredEvents.map(async event => {
