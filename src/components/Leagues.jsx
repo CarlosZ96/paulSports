@@ -4,6 +4,18 @@ import { fetchTournamentData } from '../redux/Leagues/TournamentDataSlice';
 import login from '../img/prosymbols.png';
 import '../stylesheets/Leagues.css';
 
+// Importa las imágenes
+import copaLibertadores from '../img/CONMEBOL Libertadores.jpg';
+import primeraA from '../img/Primera A, Clausura.jpg';
+import premierLeague from '../img/Premier League.jpg';
+
+// Crea un objeto de mapeo con rutas completas
+const tournamentImages = {
+  "Copa Libertadores 2024": copaLibertadores,
+  "Primera A, Clausura 2024": primeraA,
+  "Premier League": premierLeague
+};
+
 const Leagues = () => {
   const dispatch = useDispatch();
   const { tournaments, loading, error } = useSelector((state) => state.tournament);
@@ -29,9 +41,10 @@ const Leagues = () => {
             <div
               className='tournament-background-img'
               style={{
-                backgroundImage: `url(../img/Premier League.jpg)`,
+                backgroundImage: `url(${tournamentImages[tournament.name] || ''})`,
               }}
             />
+            <h3>{tournament.name}</h3>
           </div>
         ))}
       </div>
