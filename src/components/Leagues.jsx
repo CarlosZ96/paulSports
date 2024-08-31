@@ -1,28 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTournamentData } from '../redux/Leagues/TournamentDataSlice';
 import login from '../img/prosymbols.png';
 import '../stylesheets/Leagues.css';
 
-// Importa las imágenes
-import copaLibertadores from '../img/CONMEBOL Libertadores.jpg';
-import primeraA from '../img/Primera A, Clausura.jpg';
-import premierLeague from '../img/Premier League.jpg';
-
-// Crea un objeto de mapeo con rutas completas
-const tournamentImages = {
-  "Copa Libertadores 2024": copaLibertadores,
-  "Primera A, Clausura 2024": primeraA,
-  "Premier League": premierLeague
-};
-
 const Leagues = () => {
   const dispatch = useDispatch();
   const { tournaments, loading, error } = useSelector((state) => state.tournament);
+  const [backgroundImages, setBackgroundImages] = useState({});
 
   useEffect(() => {
     dispatch(fetchTournamentData());
   }, [dispatch]);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const images = {};
+      for (const tournament of tournaments) {
+        try {
+          const image = await import(`../img/${tournament.name}.jpg`);
+          images[tournament.name] = image.default;
+        } catch (error) {
+          console.error(`Error loading image for ${tournament.name}:`, error);
+        }
+      }
+      setBackgroundImages(images);
+    };
+
+    if (tournaments.length) {
+      loadImages();
+    }
+  }, [tournaments]);
 
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -41,7 +49,9 @@ const Leagues = () => {
             <div
               className='tournament-background-img'
               style={{
-                backgroundImage: `url(${tournamentImages[tournament.name] || ''})`,
+                backgroundImage: `url(${backgroundImages[tournament.name] || ''})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             />
             <h3>{tournament.name}</h3>
