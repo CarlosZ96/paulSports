@@ -7,7 +7,6 @@ export const fetchTournamentData = createAsyncThunk(
     const tournamentIds = [11536, 480, 384, 17];
     try {
       const tournamentDataRequests = tournamentIds.map(async (id) => {
-        // Fetch tournament data
         const tournamentResponse = await fetch(`https://allsportsapi2.p.rapidapi.com/api/tournament/${id}`, {
           method: 'GET',
           headers: {
@@ -16,8 +15,6 @@ export const fetchTournamentData = createAsyncThunk(
           },
         });
         const tournamentData = await tournamentResponse.json();
-
-        // Fetch image for the tournament
         const imageResponse = await fetch(`https://allsportsapi2.p.rapidapi.com/api/tournament/${id}/image`, {
           method: 'GET',
           headers: {
@@ -27,8 +24,6 @@ export const fetchTournamentData = createAsyncThunk(
         });
         const blob = await imageResponse.blob();
         const imageUrl = URL.createObjectURL(blob);
-
-        // Combine data
         return {
           id,
           name: tournamentData.uniqueTournament.name,
