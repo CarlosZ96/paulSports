@@ -50,8 +50,6 @@ const Leagues = () => {
               className='tournament-background-img'
               style={{
                 backgroundImage: `url(${backgroundImages[tournament.name] || ''})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
               }}
             />
             <h3>{tournament.name}</h3>
