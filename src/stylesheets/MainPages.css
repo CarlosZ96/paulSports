@@ -30,8 +30,8 @@ body {
 }
 
 .logo {
-  width: 80px;
-  height: 80px;
+  width: 10%;
+  height: 10%;
   margin-right: 2%;
 }
 
@@ -55,146 +55,16 @@ body {
   height: max-content;
 }
 
-.matches-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffff;
-  width: 96%;
-  height: max-content;
-  border-radius: 3px;
-}
 
-.matches-tittle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 7vw;
-  background-color: #fff500;
-  color: #0069ff;
-  width: 80%;
-}
 
-.match {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  border: #000 solid 5px;
-  width: 96%;
-  margin-bottom: 20px;
-}
 
-.match-data {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding-right: 2%;
-}
-
-.teams-data {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: #0069ff;
-  border: #000 solid 3px;
-  width: 88%;
-  height: 75%;
-}
-
-.title-name {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 4vh;
-}
-
-.title-name p {
-  margin: 0;
-  text-align: center;
-  font-size: 4vw;
-}
-
-.Tournament-logo-img {
-  height: 100%;
-  width: 100%;
-}
-
-.team-name {
-  width: 85%;
-  font-size: 3vw;
-  color: #fff;
-}
-
-.team-logo {
-  width: 15%;
-  padding: 1%;
-}
-
-.Home-Score {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  border-radius: 5px;
-  font-size: 4vw;
-  padding: 0.4% 0.6% 0.4% 0.6%;
-}
-
-.hours-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 4vh;
-}
-
-.hour {
-  margin: 0;
-  font-size: 4vw;
-}
-
-.team {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 45%;
-}
-
-.team-name:nth-child(1) {
-  text-align: end;
-}
-
-.score {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 10%;
-}
-
-.Tournament-logos {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 14%;
-}
-
-.Tournament-logos p {
-  font-size: 2.2vw;
-  margin: 0;
-  width: 100%;
-  text-align: center;
+@media only screen and (min-width: 768px) {
+  .logo{
+    height: 8%;
+    width: 8%;
+  }
+  
+  .hmenu{
+    display: none;
+  }
 }

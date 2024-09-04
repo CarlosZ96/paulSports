@@ -1,64 +1,256 @@
-.Leagues-popup-window{
-  width: 96vw;
-  height: 95vh;
-  background-color: #000E22;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+@media only screen and (max-width: 767px) {
+  .matches-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffff;
+    width: 96%;
+    height: max-content;
+    border-radius: 3px;
+  }
+
+  .matches-tittle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 7vw;
+    background-color: #fff500;
+    color: #0069ff;
+    width: 80%;
+  }
+
+  .match {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    border: #000 solid 5px;
+    width: 96%;
+    margin-bottom: 20px;
+  }
+
+  .match-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-right: 2%;
+  }
+
+  .title-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 4vh;
+  }
+
+  .title-name p {
+    margin: 0;
+    text-align: center;
+    font-size: 4vw;
+  }
+
+  .teams-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #0069ff;
+    border: #000 solid 3px;
+    width: 88%;
+    height: 75%;
+  }
+
+  .Tournament-logo-img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .team-name {
+    width: 85%;
+    font-size: 3vw;
+    color: #fff;
+  }
+
+  .team-logo {
+    width: 15%;
+    padding: 1%;
+  }
+
+  .Home-Score {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 4vw;
+    padding: 0.4% 0.6% 0.4% 0.6%;
+  }
+
+  .hours-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 4vh;
+  }
+
+  .hour {
+    margin: 0;
+    font-size: 4vw;
+  }
+
+  .team {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 45%;
+  }
+
+  .team-name:nth-child(1) {
+    text-align: end;
+  }
+
+  .score {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 10%;
+  }
+
+  .Tournament-logos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 14%;
+  }
+
+  .Tournament-logos p {
+    font-size: 2.2vw;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .Leagues-popup-window {
+    width: 96vw;
+    height: 95vh;
+    background-color: #000E22;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .Login-Container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 90%;
+    height: 10%;
+    border-radius: 3px;
+    margin: 2% 0 2% 0;
+  }
+
+  .Leagues-container {
+    width: 90%;
+    height: 90%;
+  }
+
+  .login-img {
+    width: 30px;
+    height: 30px;
+    transform: rotateY(180deg);
+    margin-right: 2%;
+  }
+
+  .login-txt {
+    color: #053983;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  .teams-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 3px;
+    width: 100%;
+    height: 30%;
+    margin-bottom: 3%;
+  }
+
+  .tournament-img {
+    width: 47px;
+    height: 47px;
+  }
+
+  .tournament-background-img {
+    width: 80%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #053983;
+  }
 }
 
-.Login-Container{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-  width: 90%;
-  height: 10%;
-  border-radius: 3px;
-  margin: 2% 0 2% 0;
-}
+@media only screen and (min-width: 768px) {
+  .Leagues-popup-window {
+    height: 14%;
+    background-color: #053983;
+  }
 
-.Leagues-container{
-  width: 90%;
-  height: 90%;
-}
+  .Login-Container {
+    display: none;
+  }
 
-.login-img {
-  width: 30px;
-  height: 30px;
-  transform: rotateY(180deg);
-  margin-right: 2%;
-}
+  .login-img {
+    display: none;
+  }
 
-.login-txt{
-  color: #053983;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
+  .login-txt {
+    display: none;
+  }
 
-.teams-container{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-  border-radius: 3px;
-  width: 100%;
-  height: 30%;
-  margin-bottom: 3%;
-}
+  .Leagues-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 
-.tournament-img{
-  width: 47px;
-  height: 47px;
-}
+  .teams-container {
+    width: 20%;
+    height: 11%;
+    background-color: #fff;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 
-.tournament-background-img {
-  width: 80%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #053983;
+  .teams-container h3{
+    margin: 0;
+  }
+
+  .tournament-img {
+    width: 20%;
+    height: 20%;
+  }
 }

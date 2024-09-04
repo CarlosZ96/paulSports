@@ -67,7 +67,6 @@ function MainPage() {
       <header className='paul-header'>
         <div className='web-logo'>
           <div className='User-info-Container'>
-
           </div>
           <img src={paul} alt="" className='logo' />
           <h1>Paul's Sports</h1>
