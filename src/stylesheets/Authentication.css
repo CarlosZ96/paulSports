@@ -1,0 +1,36 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.auth-form label {
+  margin: 0.5rem 0;
+}
+
+.auth-form input {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  max-width: 300px;
+}
+
+.auth-form button {
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+}
+
+.toggle-auth-mode {
+  background-color: #007BFF;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.error-message {
+  color: red;
+  margin-top: 0.5rem;
+}
