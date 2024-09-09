@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'; // Import Firestore functions
+import { getFirestore, doc, setDoc, getDoc, query, where, collection, getDocs } from 'firebase/firestore';
 import '../stylesheets/Authentication.css';
 
 const Authentication = ({ onLogin, onLogout }) => {
@@ -12,84 +12,62 @@ const Authentication = ({ onLogin, onLogout }) => {
   const [successMessage, setSuccessMessage] = useState(null);
 
   const auth = getAuth();
-  const db = getFirestore(); // Firestore instance
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    let loginEmail = email; // Por defecto intentamos con el correo
-
-    // Si el usuario introduce un nombre de usuario en vez de un correo
-    if (!email.includes('@')) {
-      try {
-        // Buscamos el correo correspondiente al nombre de usuario en Firestore
-        const userDoc = await getDoc(doc(db, 'usernames', email));
-        if (userDoc.exists()) {
-          loginEmail = userDoc.data().email; // Obtenemos el correo del nombre de usuario
-        } else {
-          setError('No user found with that username');
-          return;
-        }
-      } catch (err) {
-        setError('Error checking username: ' + err.message);
-        return;
-      }
-    }
-
-    signInWithEmailAndPassword(auth, loginEmail, password)
-      .then((userCredential) => {
-        console.log('Logged in:', userCredential.user);
-        setError(null);
-        setSuccessMessage('Logged in successfully!');
-        onLogin(userCredential.user);  // Notificamos que el usuario ha iniciado sesión
-        setTimeout(() => setSuccessMessage(null), 3000);
-      })
-      .catch((error) => {
-        setError('Login failed: ' + error.message);
-      });
-  };
+  const db = getFirestore();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!username) {
-      setError('Username is required');
-      return;
-    }
-
+    setError(null);
     try {
-      // Verificamos si el nombre de usuario ya existe
-      const userDoc = await getDoc(doc(db, 'usernames', username));
-      if (userDoc.exists()) {
-        setError('Username already taken');
-        return;
-      }
-
-      // Si el nombre de usuario está disponible, registramos el usuario
+      // Crear el usuario con email y contraseña
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Guardamos el nombre de usuario en Firestore
-      await setDoc(doc(db, 'usernames', username), {
-        uid: user.uid,
+      // Guardar el nombre de usuario en Firestore
+      await setDoc(doc(db, 'users', user.uid), {
         email: email,
+        username: username,
       });
 
-      console.log('Registered:', user);
-      setError(null);
-      setSuccessMessage('User created successfully! Please log in.');
-      setUsername(''); // Limpiamos los campos
-      setEmail('');
-      setPassword('');
-      setIsRegistering(false); // Volvemos al estado de inicio de sesión
-      setTimeout(() => setSuccessMessage(null), 3000);
-    } catch (error) {
-      setError('Registration failed: ' + error.message);
+      setSuccessMessage('User registered successfully');
+      if (onLogin) onLogin(user); // Manejar el login
+    } catch (err) {
+      setError(err.message);
     }
   };
 
-  return (
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
+    try {
+      let userEmail = email;
+
+      // Si el usuario ingresó un nombre de usuario, buscar su correo en Firestore
+      if (!email.includes('@')) {
+        const q = query(collection(db, 'users'), where('username', '==', email));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          throw new Error('Username not found');
+        }
+
+        // Obtener el correo electrónico del primer documento encontrado
+        const userDoc = querySnapshot.docs[0];
+        userEmail = userDoc.data().email;
+      }
+
+      // Iniciar sesión con el correo electrónico encontrado o proporcionado
+      const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
+      const user = userCredential.user;
+
+      if (onLogin) onLogin(user); // Manejar el login
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return  (
     <div>
-      <form className="auth-form">
+      <form className="auth-form" onSubmit={isRegistering ? handleRegister : handleLogin}>
         {isRegistering && (
           <>
             <label>Username:</label>
@@ -103,7 +81,7 @@ const Authentication = ({ onLogin, onLogout }) => {
           </>
         )}
 
-        <label>Email or Username:</label>
+        <label>Email or Username</label>
         <input
           type="text"
           value={email}
@@ -124,7 +102,7 @@ const Authentication = ({ onLogin, onLogout }) => {
         {error && <p className="error-message">{error}</p>}
         {successMessage && <p className="success-message">{successMessage}</p>}
 
-        <button onClick={isRegistering ? handleRegister : handleLogin}>
+        <button type="submit">
           {isRegistering ? 'Register' : 'Login'}
         </button>
       </form>
